@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliação 360° de Liderança — Instituto da Liderança</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --idl-magenta:#FF0060; --idl-purple:#391694; --idl-purple-dark:#261062; --idl-violet:#4D1DBF; --idl-turquoise:#00D0C9;
+  --idl-text:#24153E; --idl-text-muted:#6F667E; --idl-background:#FBF9FF; --idl-background-soft:#F4F0FB; --idl-white:#FFFFFF;
+  --idl-border:rgba(57,22,148,.13);
+  --idl-gradient-light:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(255,0,96,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 85% 75%,rgba(77,29,191,.04) 0%,transparent 55%),#FBF9FF;
+  --r:12px; --r-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--idl-background);color:var(--idl-text);min-height:100vh}
+.bg{position:fixed;inset:0;z-index:0;background:var(--idl-gradient-light)}
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:28px 16px 90px}
+.logo-row{display:flex;justify-content:center;margin-bottom:8px}
+.logo-row img{height:72px;width:auto;display:block}
+h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--idl-purple-dark);text-align:center;margin-bottom:4px}
+.subtitle{font-size:12px;color:var(--idl-text-muted);text-align:center;margin-bottom:22px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+.card{background:var(--idl-white);border:1px solid var(--idl-border);border-radius:var(--r);padding:22px;margin-bottom:16px;box-shadow:0 2px 18px rgba(57,22,148,.05)}
+.section-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--idl-magenta);font-family:'JetBrains Mono',monospace;margin-bottom:10px;font-weight:700}
+.section-desc{font-size:14px;color:var(--idl-text-muted);line-height:1.65;margin-bottom:14px}
+label{display:block;font-size:13px;color:var(--idl-text-muted);margin-bottom:6px;font-weight:600}
+input,select,textarea{width:100%;background:#fff;border:1px solid var(--idl-border);border-radius:var(--r-sm);padding:12px 14px;color:var(--idl-text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .25s}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--idl-magenta)}
+.field{margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.btn{padding:14px 30px;border-radius:100px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,#261062,#FF0060);color:#FBF9FF}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,0,96,.3)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{background:transparent;border:1px solid var(--idl-border);color:var(--idl-text-muted)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+.progress{height:6px;background:var(--idl-background-soft);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.progress>div{height:100%;background:linear-gradient(90deg,#391694,#FF0060);width:0;transition:width .3s}
+.pcount{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--idl-text-muted);margin-bottom:18px;text-align:right}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--idl-text-muted);margin-bottom:16px;padding:10px 12px;background:var(--idl-background-soft);border-radius:var(--r-sm)}
+.legend b{color:var(--idl-purple);font-family:'JetBrains Mono',monospace}
+.prefixo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--idl-purple-dark);margin-bottom:2px}
+.dim-desc{font-size:12px;color:var(--idl-text-muted);margin-bottom:6px}
+.item{padding:16px 0;border-top:1px solid var(--idl-border)}
+.item.first{border-top:none}
+.item p{font-size:15px;line-height:1.5;margin-bottom:10px;font-weight:500}
+.scale{display:flex;gap:8px;flex-wrap:wrap}
+.scale button{flex:1;min-width:46px;padding:12px 6px;border-radius:var(--r-sm);border:1px solid var(--idl-border);background:#fff;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--idl-text-muted);transition:.15s}
+.scale button:hover{border-color:var(--idl-magenta);color:var(--idl-text)}
+.scale button.on{background:var(--idl-purple);color:#fff;border-color:var(--idl-purple)}
+.scale button.na{flex:0 0 auto;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:12px 12px}
+.scale button.na.on{background:var(--idl-text-muted);border-color:var(--idl-text-muted)}
+.hint{font-size:12px;color:var(--idl-magenta);min-height:16px;margin-top:8px}
+.thanks{text-align:center;padding:30px 10px}
+.thanks h2{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--idl-purple-dark);margin-bottom:10px}
+.badge{display:inline-flex;padding:4px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--idl-magenta);background:rgba(255,0,96,.07);border:1px solid var(--idl-border)}
+.aviso{background:#FFF8E6;border:1px solid #F0DDA8;color:#7A5C10;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;line-height:1.55;margin-bottom:16px}
+.center{text-align:center}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="logo-row"><img src="logo.png" alt="Instituto da Liderança"></div>
+  <h1 id="titulo">Avaliação de Liderança</h1>
+  <div class="subtitle" id="sub">INSTITUTO DA LIDERANÇA</div>
+  <div id="app"></div>
+</div>
+<script src="360-core.js"></script>
+<script src="360-api.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const qs = new URLSearchParams(location.search);
+let cfg, ctx, G, paginas = [], cur = 0, S = { respostas: {}, abertas: {} }, enviado = false;
+
+const slug = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const eu = () => ctx.grupo === 'self';
+const nomeTxt = s => s.replace(/\{nome\}/g, ctx.avaliadoNome).replace(/\{min\}/g, G.minimo);
+
+// Com backend configurado, o link traz um código (?t=) e o servidor define empresa, ciclo, pessoa avaliada e grupo.
+// ?teste=1 mantém a prévia local mesmo com backend (não grava no servidor).
+const COM_API = () => Api360.ativo() && !qs.get('teste');
+
+async function init() {
+  try { cfg = await (await fetch('360-config.json?t=' + Date.now())).json(); }
+  catch (e) { $('app').innerHTML = '<div class="card">Não foi possível carregar a configuração.</div>'; return; }
+  if (COM_API()) {
+    const t = (qs.get('t') || '').trim();
+    if (!t) return renderCodigo();
+    let r;
+    try { r = await Api360.get({ action: 'checkToken', token: t }); }
+    catch (e) { return renderCodigo('Não foi possível conectar. Tente novamente em instantes.'); }
+    if (!r.valido) return renderCodigo(r.mensagem || 'Código inválido.');
+    ctx = { token: t, ciclo: r.ciclo, avaliadoNome: r.avaliado_nome, avaliado: r.avaliado_id, empresa: r.empresa, modo: r.modo, grupo: r.grupo };
+    if (!cfg.grupos[ctx.grupo] || !cfg.modos[ctx.modo]) return renderCodigo('Este código não é compatível com o questionário.');
+    return iniciar();
+  }
+  const m = qs.get('m') === '180' ? '180' : '360';
+  ctx = { ciclo: qs.get('c') || 'teste', avaliadoNome: qs.get('n') || '', avaliado: qs.get('a') || '', empresa: qs.get('e') || '', modo: m, grupo: qs.get('g') || '' };
+  if (ctx.avaliadoNome && !ctx.avaliado) ctx.avaliado = slug(ctx.avaliadoNome);
+  if (!ctx.avaliadoNome || !cfg.grupos[ctx.grupo] || !cfg.modos[m].grupos.includes(ctx.grupo)) return renderSetup();
+  iniciar();
+}
+
+function renderCodigo(msg) {
+  $('titulo').textContent = 'Avaliação de Liderança';
+  $('sub').textContent = 'INSTITUTO DA LIDERANÇA';
+  $('app').innerHTML = '<div class="card"><div class="section-title">Código de acesso</div>' +
+    '<p class="section-desc">Informe o código que você recebeu no convite (formato ABCD-EFGH) ou abra o link completo enviado.</p>' +
+    '<div class="field"><input id="s-t" placeholder="ABCD-EFGH" maxlength="9" style="text-transform:uppercase" onkeydown="if(event.key===\'Enter\')irCodigo()"></div>' +
+    '<div class="hint">' + esc(msg || '') + '</div><div class="center"><button class="btn btn-primary" onclick="irCodigo()">Continuar</button></div></div>';
+}
+function irCodigo() { const v = $('s-t').value.trim(); if (v) location.search = '?t=' + encodeURIComponent(v); }
+
+function iniciar() {
+  const m = ctx.modo;
+  G = cfg.grupos[ctx.grupo];
+  $('titulo').textContent = cfg.modos[m].rotulo + ' de Liderança';
+  $('sub').textContent = (ctx.empresa ? ctx.empresa.toUpperCase() + ' · ' : '') + 'RESPONDENDO COMO: ' + G.rotulo.toUpperCase();
+  paginas = [{ t: 'intro' }, ...Core360.dimsAtivas(cfg).map(d => ({ t: 'dim', d })), { t: 'abertas' }];
+  render();
+}
+
+function renderSetup() {
+  const g = Object.keys(cfg.grupos);
+  $('titulo').textContent = 'Avaliação de Liderança';
+  $('sub').textContent = 'MODO TESTE · PRÉVIA DO QUESTIONÁRIO';
+  $('app').innerHTML = '<div class="card"><div class="section-title">Prévia</div>' +
+    '<p class="section-desc">O link de convite já traz estes dados. Preencha abaixo para testar o questionário.</p>' +
+    '<div class="field"><label>Nome da pessoa avaliada</label><input id="s-n" placeholder="Ex.: Maria Souza"></div>' +
+    '<div class="grid2"><div class="field"><label>Formato</label><select id="s-m" onchange="setupGrupos()"><option value="360">360°</option><option value="180">180°</option></select></div>' +
+    '<div class="field"><label>Responder como</label><select id="s-g"></select></div></div>' +
+    '<div class="center"><button class="btn btn-primary" onclick="irSetup()">Abrir questionário</button></div></div>';
+  setupGrupos();
+}
+function setupGrupos() {
+  const m = $('s-m').value;
+  $('s-g').innerHTML = cfg.modos[m].grupos.map(id => '<option value="' + id + '">' + esc(cfg.grupos[id].rotulo) + '</option>').join('');
+}
+function irSetup() {
+  const n = $('s-n').value.trim(); if (!n) return $('s-n').focus();
+  location.search = '?n=' + encodeURIComponent(n) + '&m=' + $('s-m').value + '&g=' + $('s-g').value;
+}
+
+function itensPagina(p) { return Core360.itensAtivos(p.d); }
+function paginaCompleta(p) {
+  if (p.t === 'dim') return itensPagina(p).every(i => i.id in S.respostas);
+  return true;
+}
+
+function escalaBtns(id) {
+  const e = cfg.escala, v = S.respostas[id];
+  let h = '<div class="scale">';
+  for (let k = e.min; k <= e.max; k++) h += '<button type="button" class="' + (v === k ? 'on' : '') + '" title="' + esc(e.rotulos[k - e.min]) + '" onclick="marcar(\'' + id + '\',' + k + ')">' + k + '</button>';
+  if (!eu()) h += '<button type="button" class="na ' + (v === null ? 'on' : '') + '" onclick="marcar(\'' + id + '\',null)">' + esc(e.naoObservo) + '</button>';
+  return h + '</div>';
+}
+
+function render() {
+  const p = paginas[cur], n = paginas.length;
+  const pct = Math.round(cur / (n - 1) * 100);
+  let h = '<div class="progress"><div style="width:' + pct + '%"></div></div><div class="pcount">' + (cur + 1) + ' / ' + n + '</div>';
+  if (p.t === 'intro') {
+    h += '<div class="card"><div class="section-title">Antes de começar</div>' +
+      '<p class="section-desc"><b>' + (eu() ? 'Autoavaliação' : 'Avaliado(a): ' + esc(ctx.avaliadoNome)) + '</b></p>' +
+      '<p class="section-desc">' + esc(nomeTxt(G.instrucao)) + '</p>' +
+      '<p class="section-desc">São 8 blocos curtos de comportamentos observáveis, mais 3 perguntas abertas. Leva cerca de 8 minutos. Não há respostas certas: pense em como ' + (eu() ? 'você age' : 'a pessoa age') + ' <b>de fato</b>, nos últimos meses.</p>' +
+      (eu() ? '' : '<p class="section-desc">Se não tiver como avaliar algum comportamento, use a opção “' + esc(cfg.escala.naoObservo) + '”.</p>') + '</div>';
+  } else if (p.t === 'dim') {
+    h += '<div class="card"><div class="section-title">Bloco ' + cur + ' de ' + (n - 2) + '</div><div class="prefixo">Com que frequência ' + (eu() ? 'eu' : esc(ctx.avaliadoNome)) + '…</div><div class="dim-desc">' + esc(p.d.nome) + ' · ' + esc(p.d.descricao) + '</div>' +
+      '<div class="legend">' + cfg.escala.rotulos.map((r, k) => '<span><b>' + (cfg.escala.min + k) + '</b> ' + esc(r) + '</span>').join('') + '</div>';
+    itensPagina(p).forEach((i, k) => { h += '<div class="item ' + (k === 0 ? 'first' : '') + '"><p>' + esc(eu() ? i.eu : i.ele) + '</p>' + escalaBtns(i.id) + '</div>'; });
+    h += '<div class="hint" id="hint"></div></div>';
+  } else {
+    h += '<div class="card"><div class="section-title">Para terminar</div><p class="section-desc">Opcional, mas é a parte mais útil da devolutiva. Seja específico(a) e respeitoso(a): descreva comportamentos, não a pessoa.</p>';
+    cfg.abertas.forEach(a => { h += '<div class="field"><label>' + esc(nomeTxt(eu() ? a.eu : a.ele)) + '</label><textarea oninput="S.abertas[\'' + a.id + '\']=this.value">' + esc(S.abertas[a.id] || '') + '</textarea></div>'; });
+    h += '<div class="hint" id="hint"></div></div>';
+  }
+  h += '<div class="nav"><button class="btn btn-ghost" onclick="voltar()" ' + (cur === 0 ? 'style="visibility:hidden"' : '') + '>Voltar</button>' +
+    '<button class="btn btn-primary" id="bnext" onclick="avancar()">' + (cur === n - 1 ? 'Enviar' : (cur === 0 ? 'Começar' : 'Próximo')) + '</button></div>';
+  $('app').innerHTML = h;
+  window.scrollTo(0, 0);
+}
+
+function marcar(id, v) {
+  S.respostas[id] = v;
+  const p = paginas[cur];
+  const it = Core360.itensAtivos(p.d).find(i => i.id === id);
+  const idx = Core360.itensAtivos(p.d).indexOf(it);
+  const box = document.querySelectorAll('.item')[idx];
+  if (box) box.querySelector('.scale').outerHTML = escalaBtns(id);
+  const hint = $('hint'); if (hint) hint.textContent = '';
+}
+function voltar() { if (cur > 0) { cur--; render(); } }
+function avancar() {
+  const p = paginas[cur];
+  if (!paginaCompleta(p)) { $('hint').textContent = 'Responda todos os itens deste bloco para continuar.'; return; }
+  if (cur < paginas.length - 1) { cur++; render(); } else enviar();
+}
+
+async function enviar() {
+  if (enviado) return;
+  enviado = true;
+  const abertas = {}; Object.keys(S.abertas).forEach(k => { const t = (S.abertas[k] || '').trim(); if (t) abertas[k] = t; });
+  if (ctx.token) {
+    const b = $('bnext'); if (b) { b.disabled = true; b.textContent = 'Enviando…'; }
+    let r = null;
+    try { r = await Api360.post({ token: ctx.token, config_versao: cfg.versao, respostas_json: JSON.stringify(S.respostas), abertas_json: JSON.stringify(abertas) }); } catch (e) {}
+    if (!r || r.status !== 'ok') {
+      enviado = false;
+      if (b) { b.disabled = false; b.textContent = 'Enviar'; }
+      const h = $('hint'); if (h) h.textContent = (r && r.mensagem ? r.mensagem + '. ' : 'Falha de conexão. ') + 'Suas respostas continuam aqui: tente enviar de novo.';
+      return;
+    }
+    $('app').innerHTML = '<div class="card thanks"><span class="badge">Resposta registrada</span><h2>Obrigado!</h2><p class="section-desc">Sua avaliação foi registrada' +
+      (eu() ? '.' : ' de forma ' + (G.anonimo ? 'anônima.' : 'identificada como ' + esc(G.rotulo) + '.')) + ' Você já pode fechar esta página.</p></div>';
+    window.scrollTo(0, 0);
+    return;
+  }
+  const rec = {
+    id: 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    ciclo: ctx.ciclo, avaliado: ctx.avaliado, avaliadoNome: ctx.avaliadoNome, empresa: ctx.empresa,
+    modo: ctx.modo, grupo: ctx.grupo, config_versao: cfg.versao, data: new Date().toISOString().slice(0, 10),
+    respostas: S.respostas, abertas
+  };
+  const ok = Core360.store.add(rec);
+  $('app').innerHTML = '<div class="card thanks"><span class="badge">' + (ok ? 'Resposta registrada' : 'Atenção') + '</span><h2>' + (ok ? 'Obrigado!' : 'Não foi possível gravar') + '</h2>' +
+    '<p class="section-desc">' + (ok ? 'Sua avaliação foi registrada' + (eu() ? '.' : ' de forma ' + (G.anonimo ? 'anônima.' : 'identificada como ' + esc(G.rotulo) + '.')) : 'O navegador bloqueou o armazenamento local. Tente novamente em outra janela.') + '</p>' +
+    '<div class="aviso">Modo teste: nesta versão a resposta fica gravada só neste navegador. A coleta com vários respondentes depende do backend com tokens (próxima etapa).</div></div>';
+}
+init();
+</script>
+</body>
+</html>

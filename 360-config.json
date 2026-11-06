@@ -1,0 +1,115 @@
+{
+  "versao": "1.0.0",
+  "nome": "Avaliação 360° de Liderança IDL",
+  "descricao": "Os 8 microcomportamentos de liderança do Instituto da Liderança, avaliados por diferentes olhares. É leitura para desenvolvimento, não nota de desempenho.",
+  "modos": {
+    "360": { "rotulo": "Avaliação 360°", "grupos": ["self", "gestor", "pares", "liderados", "outros"] },
+    "180": { "rotulo": "Avaliação 180°", "grupos": ["self", "gestor"] }
+  },
+  "grupos": {
+    "self": {
+      "rotulo": "Autoavaliação", "anonimo": false, "minimo": 1, "cor": "#FF0060", "esperado": 1,
+      "instrucao": "Você vai avaliar o seu próprio comportamento como líder. Responda pensando no que você realmente faz no dia a dia, não no que gostaria de fazer. Suas respostas serão comparadas com as dos outros avaliadores."
+    },
+    "gestor": {
+      "rotulo": "Gestor(a) direto(a)", "anonimo": false, "minimo": 1, "cor": "#00A79E", "esperado": 1,
+      "instrucao": "Você foi convidado(a) a avaliar o comportamento de liderança de {nome}. Como gestor(a) direto(a), suas respostas aparecem identificadas como \"Gestor(a)\" no relatório."
+    },
+    "pares": {
+      "rotulo": "Pares", "anonimo": true, "minimo": 3, "cor": "#391694", "esperado": 4,
+      "instrucao": "Você foi convidado(a) a avaliar o comportamento de liderança de {nome}, como colega de mesmo nível. Suas respostas são anônimas: o relatório só mostra resultados de grupos com pelo menos {min} avaliadores e nenhum comentário é identificado."
+    },
+    "liderados": {
+      "rotulo": "Equipe (liderados)", "anonimo": true, "minimo": 3, "cor": "#4D1DBF", "esperado": 5,
+      "instrucao": "Você foi convidado(a) a avaliar o comportamento de liderança de {nome}, como integrante da equipe. Suas respostas são anônimas: o relatório só mostra resultados de grupos com pelo menos {min} avaliadores e nenhum comentário é identificado."
+    },
+    "outros": {
+      "rotulo": "Outros (clientes internos/externos)", "anonimo": true, "minimo": 3, "cor": "#D69A1E", "esperado": 3,
+      "instrucao": "Você foi convidado(a) a avaliar o comportamento de liderança de {nome}, a partir da sua experiência de trabalho com essa pessoa. Suas respostas são anônimas: o relatório só mostra resultados de grupos com pelo menos {min} avaliadores e nenhum comentário é identificado."
+    }
+  },
+  "escala": {
+    "min": 1,
+    "max": 5,
+    "rotulos": ["Raramente", "Poucas vezes", "Algumas vezes", "Frequentemente", "Consistentemente"],
+    "naoObservo": "Não tenho como avaliar"
+  },
+  "leitura": {
+    "limiarGap": 0.5,
+    "forte": 4.0,
+    "desenvolver": 3.0,
+    "divergenciaDP": 1.0
+  },
+  "anonimato": { "minimoGrupo": 3 },
+  "dimensoes": [
+    {
+      "id": "presenca", "nome": "Presença", "descricao": "Disponibilidade e atenção plena.", "ativo": true,
+      "itens": [
+        { "id": "pres1", "ativo": true, "ele": "está presente e disponível quando a equipe precisa", "eu": "estou presente e disponível quando a equipe precisa" },
+        { "id": "pres2", "ativo": true, "ele": "dá atenção plena nas conversas, sem se distrair com celular ou outras tarefas", "eu": "dou atenção plena nas conversas, sem me distrair com celular ou outras tarefas" },
+        { "id": "pres3", "ativo": true, "ele": "percebe quando alguém da equipe não está bem e procura apoiar", "eu": "percebo quando alguém da equipe não está bem e procuro apoiar" }
+      ]
+    },
+    {
+      "id": "equidade", "nome": "Equidade", "descricao": "Mesmos critérios e justiça nas oportunidades.", "ativo": true,
+      "itens": [
+        { "id": "equi1", "ativo": true, "ele": "trata as pessoas com os mesmos critérios, independentemente de afinidade", "eu": "trato as pessoas com os mesmos critérios, independentemente de afinidade" },
+        { "id": "equi2", "ativo": true, "ele": "distribui tarefas e oportunidades de forma justa", "eu": "distribuo tarefas e oportunidades de forma justa" },
+        { "id": "equi3", "ativo": true, "ele": "dá espaço para que todos se manifestem nas reuniões, não só os mais falantes", "eu": "dou espaço para que todos se manifestem nas reuniões, não só os mais falantes" }
+      ]
+    },
+    {
+      "id": "comunicacao", "nome": "Comunicação", "descricao": "Clareza e fluxo de informação.", "ativo": true,
+      "itens": [
+        { "id": "comu1", "ativo": true, "ele": "comunica com clareza e objetividade o que espera de cada pessoa", "eu": "comunico com clareza e objetividade o que espero de cada pessoa" },
+        { "id": "comu2", "ativo": true, "ele": "mantém as pessoas informadas sobre decisões e mudanças a tempo", "eu": "mantenho as pessoas informadas sobre decisões e mudanças a tempo" },
+        { "id": "comu3", "ativo": true, "ele": "dá feedback específico e respeitoso, tanto positivo quanto corretivo", "eu": "dou feedback específico e respeitoso, tanto positivo quanto corretivo" }
+      ]
+    },
+    {
+      "id": "reconhecimento", "nome": "Reconhecimento", "descricao": "Valorização de entregas e esforço.", "ativo": true,
+      "itens": [
+        { "id": "reco1", "ativo": true, "ele": "reconhece boas entregas e esforços, em público quando cabe", "eu": "reconheço boas entregas e esforços, em público quando cabe" },
+        { "id": "reco2", "ativo": true, "ele": "agradece as contribuições individuais de forma genuína", "eu": "agradeço as contribuições individuais de forma genuína" },
+        { "id": "reco3", "ativo": true, "ele": "celebra os resultados e as conquistas da equipe", "eu": "celebro os resultados e as conquistas da equipe" }
+      ]
+    },
+    {
+      "id": "escuta", "nome": "Escuta", "descricao": "Ouvir antes de decidir.", "ativo": true,
+      "itens": [
+        { "id": "escu1", "ativo": true, "ele": "ouve sem interromper", "eu": "ouço sem interromper" },
+        { "id": "escu2", "ativo": true, "ele": "pergunta a opinião das pessoas antes de decidir o que as afeta", "eu": "pergunto a opinião das pessoas antes de decidir o que as afeta" },
+        { "id": "escu3", "ativo": true, "ele": "considera com abertura ideias diferentes das suas", "eu": "considero com abertura ideias diferentes das minhas" }
+      ]
+    },
+    {
+      "id": "coerencia", "nome": "Coerência", "descricao": "Fazer o que diz.", "ativo": true,
+      "itens": [
+        { "id": "coer1", "ativo": true, "ele": "cumpre o que promete", "eu": "cumpro o que prometo" },
+        { "id": "coer2", "ativo": true, "ele": "age de acordo com os valores que defende", "eu": "ajo de acordo com os valores que defendo" },
+        { "id": "coer3", "ativo": true, "ele": "assume a responsabilidade pelos próprios erros", "eu": "assumo a responsabilidade pelos meus próprios erros" }
+      ]
+    },
+    {
+      "id": "rituais", "nome": "Rituais", "descricao": "Rotinas previsíveis de alinhamento.", "ativo": true,
+      "itens": [
+        { "id": "ritu1", "ativo": true, "ele": "realiza conversas 1:1 com regularidade", "eu": "realizo conversas 1:1 com regularidade" },
+        { "id": "ritu2", "ativo": true, "ele": "mantém reuniões e rotinas de alinhamento previsíveis", "eu": "mantenho reuniões e rotinas de alinhamento previsíveis" },
+        { "id": "ritu3", "ativo": true, "ele": "acompanha o andamento das entregas sem microgerenciar", "eu": "acompanho o andamento das entregas sem microgerenciar" }
+      ]
+    },
+    {
+      "id": "clareza", "nome": "Clareza", "descricao": "Prioridades e porquês explícitos.", "ativo": true,
+      "itens": [
+        { "id": "clar1", "ativo": true, "ele": "deixa claras as prioridades e as metas", "eu": "deixo claras as prioridades e as metas" },
+        { "id": "clar2", "ativo": true, "ele": "explica o porquê das decisões e dos pedidos", "eu": "explico o porquê das decisões e dos pedidos" },
+        { "id": "clar3", "ativo": true, "ele": "define quem é responsável por cada entrega e até quando", "eu": "defino quem é responsável por cada entrega e até quando" }
+      ]
+    }
+  ],
+  "abertas": [
+    { "id": "continuar", "rotulo": "Continuar", "ele": "O que {nome} faz bem e deveria CONTINUAR fazendo?", "eu": "O que você faz bem e deveria CONTINUAR fazendo?" },
+    { "id": "comecar", "rotulo": "Começar", "ele": "O que {nome} deveria COMEÇAR a fazer?", "eu": "O que você deveria COMEÇAR a fazer?" },
+    { "id": "parar", "rotulo": "Parar", "ele": "O que {nome} deveria PARAR de fazer?", "eu": "O que você deveria PARAR de fazer?" }
+  ]
+}

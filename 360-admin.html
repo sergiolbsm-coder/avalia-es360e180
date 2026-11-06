@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliação 360° — Painel — Instituto da Liderança</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --idl-magenta:#FF0060; --idl-purple:#391694; --idl-purple-dark:#261062; --idl-violet:#4D1DBF; --idl-turquoise:#00D0C9;
+  --idl-text:#24153E; --idl-text-muted:#6F667E; --idl-background:#FBF9FF; --idl-background-soft:#F4F0FB; --idl-white:#FFFFFF;
+  --idl-border:rgba(57,22,148,.13);
+  --idl-gradient-light:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(255,0,96,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 85% 75%,rgba(77,29,191,.04) 0%,transparent 55%),#FBF9FF;
+  --r:12px; --r-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--idl-background);color:var(--idl-text);min-height:100vh}
+.bg{position:fixed;inset:0;z-index:0;background:var(--idl-gradient-light)}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:24px 16px 90px}
+.top{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.top img{height:64px;width:auto}
+.top h1{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--idl-purple-dark)}
+.top small{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--idl-text-muted);text-transform:uppercase}
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:10px 18px;border-radius:100px;border:1px solid var(--idl-border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:var(--idl-text-muted);font-family:'DM Sans',sans-serif}
+.tab.on{background:var(--idl-purple);color:#fff;border-color:var(--idl-purple)}
+.card{background:var(--idl-white);border:1px solid var(--idl-border);border-radius:var(--r);padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 18px rgba(57,22,148,.05)}
+.st{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--idl-magenta);font-family:'JetBrains Mono',monospace;margin-bottom:10px;font-weight:700}
+.desc{font-size:13px;color:var(--idl-text-muted);line-height:1.6;margin-bottom:12px}
+label{display:block;font-size:12px;color:var(--idl-text-muted);margin-bottom:5px;font-weight:600}
+input,select,textarea{width:100%;background:#fff;border:1px solid var(--idl-border);border-radius:var(--r-sm);padding:10px 12px;color:var(--idl-text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none}
+input:focus,select:focus{border-color:var(--idl-magenta)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px;align-items:end}
+.btn{padding:11px 22px;border-radius:100px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,#261062,#FF0060);color:#FBF9FF}
+.btn-primary:hover{box-shadow:0 6px 20px rgba(255,0,96,.3)}
+.btn-ghost{background:transparent;border:1px solid var(--idl-border);color:var(--idl-text-muted)}
+.btn-ghost:hover{border-color:var(--idl-magenta);color:var(--idl-text)}
+.btn-sm{padding:6px 12px;font-size:11px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--idl-text-muted);padding:8px 8px;border-bottom:2px solid var(--idl-border)}
+td{padding:9px 8px;border-bottom:1px solid var(--idl-border);vertical-align:middle}
+td.v,th.v{text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700}
+.c-ok{background:rgba(28,163,85,.12);color:#12703a}.c-mid{background:rgba(57,22,148,.06)}.c-low{background:rgba(214,154,30,.16);color:#8a5d00}.c-na{color:#aaa}
+.tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.pill{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;background:var(--idl-background-soft);color:var(--idl-text-muted)}
+.muted{color:var(--idl-text-muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:6px}
+.kpi{background:var(--idl-background-soft);border-radius:var(--r-sm);padding:12px 14px}
+.kpi b{display:block;font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--idl-purple-dark);line-height:1.1}
+.kpi span{font-size:11px;color:var(--idl-text-muted)}
+.radar{width:100%;max-width:520px;display:block;margin:0 auto}
+.leg{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:12px;margin-top:6px}
+.leg i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.cols2{grid-template-columns:1fr}}
+ul.l{list-style:none}
+ul.l li{padding:8px 0;border-bottom:1px solid var(--idl-border);font-size:13px;line-height:1.5}
+ul.l li:last-child{border-bottom:none}
+.cmt{background:var(--idl-background-soft);border-radius:var(--r-sm);padding:9px 12px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.cmt small{display:block;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--idl-text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.rel{background:#fff;border:1px solid var(--idl-border);border-radius:var(--r);padding:28px}
+.rel-head{text-align:center;border:2px solid var(--idl-magenta);border-radius:16px;padding:26px 20px;margin-bottom:22px}
+.rel-head img{height:80px;margin-bottom:6px}
+.rel-name{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--idl-purple-dark)}
+.rel-sec{margin-bottom:26px}
+.rel-sec h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--idl-purple-dark);margin-bottom:8px}
+.nota{font-size:12px;color:var(--idl-text-muted);line-height:1.6;border-left:3px solid var(--idl-magenta);padding:6px 12px;background:var(--idl-background-soft)}
+.vazio{text-align:center;color:var(--idl-text-muted);padding:30px;font-size:14px}
+.toast{position:fixed;bottom:24px;right:24px;background:#391694;color:#FBF9FF;border-radius:10px;padding:12px 18px;font-size:13px;font-weight:500;box-shadow:0 8px 32px rgba(57,22,148,.35);z-index:9999;display:none}
+.pdi td{height:38px}
+@media print{
+  body{background:#fff}.bg,.top,.tabs,.noprint,.toast{display:none!important}
+  .wrap{max-width:none;padding:0}.rel{border:none;padding:0}.rel-sec{break-inside:avoid}
+  .kpi,.cmt,.nota{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .c-ok,.c-low,.c-mid,.tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="top"><img src="logo.png" alt="Instituto da Liderança"><div><h1>Avaliação 360° / 180°</h1><small id="modo">Painel do Instituto · modo teste local</small></div></div>
+  <div class="tabs noprint">
+    <button class="tab on" id="t-ciclos" onclick="go('ciclos')">Ciclos e links</button>
+    <button class="tab" id="t-rel" onclick="go('rel')">Relatório</button>
+    <button class="tab" id="t-dados" onclick="go('dados')">Dados e testes</button>
+  </div>
+  <div id="view"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="360-core.js"></script>
+<script src="360-api.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const slug = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const uid = () => Math.random().toString(36).slice(2, 7);
+const fmt = v => v == null ? '—' : v.toFixed(1).replace('.', ',');
+const fmtGap = v => v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1).replace('.', ',');
+function toast(m) { const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3200); }
+
+let cfg, ciclos = [], aba = 'ciclos', selCiclo = '', selAv = '';
+const CK = 'idl360_ciclos';
+const lerCiclos = () => { try { return JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) { return []; } };
+const salvarCiclos = () => { if (API()) return; try { localStorage.setItem(CK, JSON.stringify(ciclos)); } catch (e) { toast('Não foi possível gravar neste navegador.'); } };
+const cicloAtual = () => ciclos.find(c => c.id === selCiclo) || null;
+
+/* Fonte dos dados: com backend (360-api.js) tudo vem do servidor e exige a chave de administração;
+   sem backend, modo teste local (ciclos e respostas só neste navegador). */
+const API = () => Api360.ativo();
+let autenticado = false, cacheAval = [];
+const getSecret = () => { try { return sessionStorage.getItem('idl360_admin_secret') || ''; } catch (e) { return ''; } };
+const avaliacoes = () => API() ? cacheAval : Core360.store.listar();
+const linkToken = c => new URL('360.html', location.href).href + '?t=' + c;
+const ckey = (empresa, ciclo) => slug(empresa) + '|' + ciclo;
+
+async function carregarApi() {
+  const [jt, jr] = await Promise.all([Api360.get({ action: 'getTokens', secret: getSecret() }), Api360.get({ action: 'getRespostas', secret: getSecret() })]);
+  if (jt.status !== 'ok' || jr.status !== 'ok') throw new Error(jt.mensagem || jr.mensagem || 'Não autorizado');
+  const mapa = {}, lista = [];
+  (jt.tokens || []).forEach(t => {
+    const id = ckey(t.empresa, t.ciclo);
+    if (!mapa[id]) { mapa[id] = { id, empresa: String(t.empresa), nome: String(t.ciclo), modo: String(t.modo), avaliados: [], tokens: [] }; lista.push(mapa[id]); }
+    const c = mapa[id];
+    c.tokens.push(t);
+    if (!c.avaliados.find(a => a.id === t.avaliado_id)) c.avaliados.push({ id: t.avaliado_id, nome: String(t.avaliado_nome), cargo: String(t.cargo || '') });
+  });
+  ciclos = lista;
+  cacheAval = (jr.respostas || []).map((r, i) => {
+    let resp = {}, ab = {};
+    try { resp = JSON.parse(r.respostas_json || '{}'); } catch (e) {}
+    try { ab = JSON.parse(r.abertas_json || '{}'); } catch (e) {}
+    return { id: 'r' + i, ciclo: ckey(r.empresa, r.ciclo), avaliado: r.avaliado_id, avaliadoNome: r.avaliado_nome, empresa: r.empresa, modo: String(r.modo), grupo: r.grupo, config_versao: r.config_versao, data: String(r.data).slice(0, 10), respostas: resp, abertas: ab };
+  });
+  if (!ciclos.find(c => c.id === selCiclo)) selCiclo = ciclos[0] ? ciclos[0].id : '';
+}
+
+async function boot() {
+  cfg = await (await fetch('360-config.json?t=' + Date.now())).json();
+  const erros = Core360.validarConfig(cfg);
+  if (erros.length) toast('Config com problemas: ' + erros[0]);
+  if (API()) {
+    $('modo').textContent = 'Painel do Instituto · conectado ao servidor';
+    let ok = false;
+    if (getSecret()) { try { ok = (await Api360.get({ action: 'validarAdmin', secret: getSecret() })).valido; } catch (e) {} }
+    if (!ok) return renderGate();
+    return entrarOk();
+  }
+  autenticado = true;
+  ciclos = lerCiclos();
+  if (ciclos.length) selCiclo = ciclos[0].id;
+  go('ciclos');
+}
+async function entrarOk() {
+  try { await carregarApi(); } catch (e) { return renderGate('Não foi possível carregar os dados: ' + e.message); }
+  autenticado = true; go('ciclos');
+}
+function renderGate(msg) {
+  autenticado = false;
+  $('view').innerHTML = '<div class="card" style="max-width:420px;margin:40px auto"><div class="st">Acesso restrito</div><p class="desc">Informe a chave de administração da avaliação 360°.</p>' +
+    '<div style="margin-bottom:10px"><label>Chave de administração</label><input type="password" id="g-sec" onkeydown="if(event.key===\'Enter\')entrar()"></div><div class="desc" style="color:var(--idl-magenta);min-height:16px">' + esc(msg || '') + '</div>' +
+    '<button class="btn btn-primary" onclick="entrar()">Entrar</button></div>';
+}
+async function entrar() {
+  const v = $('g-sec').value; if (!v) return;
+  try {
+    const r = await Api360.get({ action: 'validarAdmin', secret: v });
+    if (!r.valido) return renderGate('Chave incorreta.');
+    try { sessionStorage.setItem('idl360_admin_secret', v); } catch (e) {}
+    entrarOk();
+  } catch (e) { renderGate('Não foi possível conectar ao backend.'); }
+}
+function sair() { try { sessionStorage.removeItem('idl360_admin_secret'); } catch (e) {} location.reload(); }
+function go(v) {
+  if (!autenticado) return renderGate();
+  aba = v;
+  ['ciclos', 'rel', 'dados'].forEach(k => $('t-' + k).classList.toggle('on', k === v));
+  if (v === 'ciclos') renderCiclos(); else if (v === 'rel') renderRel(); else renderDados();
+}
+
+/* ───────── Ciclos e links ───────── */
+const linkPara = (c, av, g) => {
+  const u = new URL('360.html', location.href);
+  u.search = new URLSearchParams({ c: c.id, e: c.empresa, a: av.id, n: av.nome, m: c.modo, g }).toString();
+  return u.href;
+};
+const contar = (c, av, g) => avaliacoes().filter(r => r.ciclo === c.id && r.avaliado === av.id && r.grupo === g).length;
+
+/* ── Convites com backend: um código por grupo, definido no servidor ── */
+let ultimoConvite = null;
+function renderCiclosApi() {
+  const empresas = [...new Set(ciclos.map(c => c.empresa))];
+  let h = '<div class="card"><div class="st">Novo convite</div><p class="desc">Cada pessoa avaliada recebe um código por grupo de avaliadores. Autoavaliação e gestor têm código individual; pares, equipe e outros usam um código coletivo, com limite de respostas.</p>' +
+    '<div class="row"><div><label>Empresa</label><input id="v-emp" list="v-emps" placeholder="Nome da empresa"><datalist id="v-emps">' + empresas.map(e => '<option value="' + esc(e) + '">').join('') + '</datalist></div>' +
+    '<div><label>Ciclo</label><input id="v-ciclo" placeholder="Ex.: 2026-lideres"></div>' +
+    '<div><label>Formato</label><select id="v-modo" onchange="$(\'v-lim\').style.display=this.value===\'360\'?\'\':\'none\'"><option value="360">360°</option><option value="180">180°</option></select></div></div>' +
+    '<div class="row"><div><label>Pessoa avaliada</label><input id="v-nome" placeholder="Nome completo"></div><div><label>Cargo</label><input id="v-cargo" placeholder="Cargo / função"></div></div>' +
+    '<div class="row" id="v-lim"><div><label>Máx. de respostas: pares</label><input id="v-pares" type="number" min="1" max="500" value="4"></div><div><label>Máx. de respostas: equipe</label><input id="v-liderados" type="number" min="1" max="500" value="5"></div><div><label>Máx. de respostas: outros</label><input id="v-outros" type="number" min="1" max="500" value="3"></div></div>' +
+    '<button class="btn btn-primary" onclick="gerarConvites()">Gerar links</button></div>';
+  if (ultimoConvite) h += '<div class="card"><div class="st">Links gerados para ' + esc(ultimoConvite.nome) + '</div>' + tabelaLinks(ultimoConvite.tokens) + '</div>';
+  if (!ciclos.length) { $('view').innerHTML = h + '<div class="card vazio">Nenhum convite emitido ainda.</div>' + cardSenha(); return; }
+  ciclos.forEach(c => {
+    h += '<div class="card"><div class="st">' + esc(c.empresa) + ' · ' + esc(c.nome) + ' (' + c.modo + '°)</div>';
+    c.avaliados.forEach(av => {
+      const toks = c.tokens.filter(t => t.avaliado_id === av.id);
+      h += '<div style="border-top:1px solid var(--idl-border);padding:12px 0"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px"><div><b>' + esc(av.nome) + '</b> <span class="muted">' + esc(av.cargo) + '</span></div>' +
+        '<button class="btn btn-ghost btn-sm" onclick="selCiclo=\'' + esc(c.id) + '\';selAv=\'' + esc(av.id) + '\';go(\'rel\')">Ver relatório</button></div>' + tabelaLinks(toks, true) + '</div>';
+    });
+    h += '</div>';
+  });
+  $('view').innerHTML = h + cardSenha();
+}
+function tabelaLinks(toks, comAjuste) {
+  const ordem = ['self', 'gestor', 'pares', 'liderados', 'outros'];
+  return '<table><tr><th>Quem responde</th><th>Código</th><th class="v">Usos</th><th>Ações</th></tr>' + [...toks].sort((a, b) => ordem.indexOf(a.grupo) - ordem.indexOf(b.grupo)).map(t => {
+    const g = cfg.grupos[t.grupo] || { rotulo: t.grupo };
+    return '<tr><td>' + esc(g.rotulo) + '</td><td><b style="font-family:\'JetBrains Mono\',monospace">' + esc(t.codigo) + '</b></td><td class="v">' + (t.usos == null ? '—' : t.usos + '/' + t.limite) + '</td>' +
+      '<td><div class="btns"><button class="btn btn-ghost btn-sm" onclick="copiarTxt(\'' + esc(linkToken(t.codigo)) + '\')">Copiar link</button>' +
+      (comAjuste && g.anonimo ? '<button class="btn btn-ghost btn-sm" onclick="ajustarLimite(\'' + esc(t.codigo) + '\',' + Number(t.limite) + ',' + Number(t.usos) + ')">Ajustar limite</button>' : '') + '</div></td></tr>';
+  }).join('') + '</table>';
+}
+function cardSenha() {
+  return '<div class="card"><div class="st">Portal da empresa</div><p class="desc">A empresa acompanha só a participação (quem já respondeu) e os links. Não vê notas nem comentários.</p>' +
+    '<div class="row"><div><label>Empresa (igual ao nome nos convites)</label><input id="s-emp"></div><div><label>Senha (mín. 6 caracteres)</label><input id="s-sen" type="password"></div>' +
+    '<div class="btns"><button class="btn btn-primary" onclick="definirSenha()">Definir senha</button><a class="btn btn-ghost" style="text-decoration:none" href="360-portal.html" target="_blank">Abrir portal ↗</a></div></div>' +
+    '<div class="btns" style="margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="atualizar()">Atualizar dados</button><button class="btn btn-ghost btn-sm" onclick="sair()">Sair</button></div></div>';
+}
+const copiarTxt = t => (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Link copiado.'), () => prompt('Copie o link:', t));
+async function atualizar() { try { await carregarApi(); go(aba); toast('Dados atualizados.'); } catch (e) { toast('Falha ao atualizar.'); } }
+async function gerarConvites() {
+  const body = { action: 'gerarConvites', secret: getSecret(), empresa: $('v-emp').value.trim(), ciclo: $('v-ciclo').value.trim(), modo: $('v-modo').value, avaliado_nome: $('v-nome').value.trim(), cargo: $('v-cargo').value.trim(),
+    limites: { pares: Number($('v-pares').value), liderados: Number($('v-liderados').value), outros: Number($('v-outros').value) } };
+  if (!body.empresa || !body.ciclo || !body.avaliado_nome) return toast('Informe empresa, ciclo e o nome da pessoa avaliada.');
+  try {
+    const r = await Api360.post(body);
+    if (r.status !== 'ok') return toast(r.mensagem || 'Erro ao gerar.');
+    ultimoConvite = { nome: body.avaliado_nome, tokens: r.tokens.map(t => ({ grupo: t.grupo, codigo: t.codigo, limite: t.limite, usos: null })) };
+    await carregarApi(); renderCiclosApi(); toast('Links gerados.');
+  } catch (e) { toast('Falha de conexão.'); }
+}
+async function ajustarLimite(codigo, atual, usos) {
+  const v = prompt('Novo limite de respostas para este link (mínimo ' + Math.max(1, usos) + '):', atual);
+  if (v == null) return;
+  try { const r = await Api360.post({ action: 'ajustarLimite', secret: getSecret(), codigo, limite: Number(v) }); if (r.status !== 'ok') return toast(r.mensagem || 'Erro.'); await carregarApi(); renderCiclosApi(); toast('Limite atualizado.'); }
+  catch (e) { toast('Falha de conexão.'); }
+}
+async function definirSenha() {
+  const emp = $('s-emp').value.trim(), sen = $('s-sen').value;
+  if (!emp || sen.length < 6) return toast('Informe a empresa e uma senha com 6+ caracteres.');
+  try { const r = await Api360.post({ action: 'definirSenhaEmpresa', secret: getSecret(), empresa: emp, senha: sen }); toast(r.status === 'ok' ? 'Senha definida.' : (r.mensagem || 'Erro.')); $('s-sen').value = ''; }
+  catch (e) { toast('Falha de conexão.'); }
+}
+
+function renderCiclos() {
+  if (API()) return renderCiclosApi();
+  const c = cicloAtual();
+  let h = '<div class="card"><div class="st">Novo ciclo</div><div class="row">' +
+    '<div><label>Empresa</label><input id="n-emp" placeholder="Nome da empresa"></div>' +
+    '<div><label>Nome do ciclo</label><input id="n-nome" placeholder="Ex.: Líderes 2026"></div>' +
+    '<div><label>Formato</label><select id="n-modo"><option value="360">360° (autoavaliação, gestor, pares, equipe, outros)</option><option value="180">180° (autoavaliação + gestor)</option></select></div>' +
+    '<div><button class="btn btn-primary" onclick="criarCiclo()">Criar ciclo</button></div></div></div>';
+  if (!ciclos.length) { $('view').innerHTML = h + '<div class="card vazio">Nenhum ciclo ainda. Crie um acima, ou gere um exemplo na aba “Dados e testes”.</div>'; return; }
+  h += '<div class="card"><div class="st">Ciclo</div><div class="row"><div><label>Selecionar</label><select onchange="selCiclo=this.value;renderCiclos()">' +
+    ciclos.map(x => '<option value="' + x.id + '" ' + (x.id === selCiclo ? 'selected' : '') + '>' + esc(x.empresa + ' · ' + x.nome + ' (' + x.modo + '°)') + '</option>').join('') + '</select></div></div></div>';
+  if (c) {
+    const gs = Core360.gruposDoModo(cfg, c.modo);
+    h += '<div class="card"><div class="st">Pessoas avaliadas</div><div class="row">' +
+      '<div><label>Nome</label><input id="a-nome" placeholder="Nome completo"></div><div><label>Cargo</label><input id="a-cargo" placeholder="Cargo / função"></div>' +
+      '<div><button class="btn btn-primary" onclick="addAvaliado()">Adicionar</button></div></div>';
+    if (!c.avaliados.length) h += '<p class="desc">Adicione a primeira pessoa avaliada para gerar os links de convite.</p>';
+    else {
+      c.avaliados.forEach(av => {
+        h += '<div style="border-top:1px solid var(--idl-border);padding:14px 0"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px"><div><b>' + esc(av.nome) + '</b> <span class="muted">' + esc(av.cargo || '') + '</span></div>' +
+          '<div class="btns"><button class="btn btn-ghost btn-sm" onclick="selAv=\'' + av.id + '\';go(\'rel\')">Ver relatório</button><button class="btn btn-ghost btn-sm" onclick="remAvaliado(\'' + av.id + '\')">Remover</button></div></div>' +
+          '<table><tr><th>Quem responde</th><th class="v">Respostas</th><th class="v">Esperado</th><th>Link do convite</th></tr>' +
+          gs.map(g => { const n = contar(c, av, g.id); return '<tr><td>' + esc(g.rotulo) + (g.anonimo ? ' <span class="pill">anônimo · mín. ' + g.minimo + '</span>' : '') + '</td><td class="v">' + n + '</td><td class="v">' + (g.esperado || 1) + '</td>' +
+            '<td><div class="btns"><button class="btn btn-ghost btn-sm" onclick="copiar(\'' + av.id + '\',\'' + g.id + '\')">Copiar link</button><a class="btn btn-ghost btn-sm" style="text-decoration:none" target="_blank" href="' + esc(linkPara(c, av, g.id)) + '">Abrir</a></div></td></tr>'; }).join('') + '</table></div>';
+      });
+    }
+    h += '<p class="desc" style="margin-top:8px">Os grupos anônimos (pares, equipe, outros) usam <b>um link coletivo</b> por pessoa avaliada: todos os convidados do grupo recebem o mesmo link. Autoavaliação e gestor recebem links próprios.</p></div>';
+  }
+  $('view').innerHTML = h;
+}
+function criarCiclo() {
+  const emp = $('n-emp').value.trim(), nome = $('n-nome').value.trim();
+  if (!emp || !nome) return toast('Informe empresa e nome do ciclo.');
+  const c = { id: slug(emp + '-' + nome) + '-' + uid(), empresa: emp, nome, modo: $('n-modo').value, avaliados: [] };
+  ciclos.unshift(c); selCiclo = c.id; salvarCiclos(); renderCiclos(); toast('Ciclo criado.');
+}
+function addAvaliado() {
+  const c = cicloAtual(), nome = $('a-nome').value.trim(); if (!c) return;
+  if (!nome) return toast('Informe o nome.');
+  c.avaliados.push({ id: slug(nome) + '-' + uid(), nome, cargo: $('a-cargo').value.trim() });
+  salvarCiclos(); renderCiclos();
+}
+function remAvaliado(id) {
+  const c = cicloAtual(); if (!c || !confirm('Remover esta pessoa do ciclo? As respostas já gravadas não são apagadas.')) return;
+  c.avaliados = c.avaliados.filter(a => a.id !== id); salvarCiclos(); renderCiclos();
+}
+function copiar(avId, g) {
+  const c = cicloAtual(), av = c.avaliados.find(a => a.id === avId), t = linkPara(c, av, g);
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Link copiado.'), () => prompt('Copie o link:', t));
+}
+
+/* ───────── Relatório ───────── */
+function renderRel() {
+  const comAv = ciclos.filter(c => c.avaliados.length);
+  if (!comAv.length) { $('view').innerHTML = '<div class="card vazio">Nenhuma pessoa avaliada ainda. Cadastre em “Ciclos e links” ou gere um exemplo em “Dados e testes”.</div>'; return; }
+  if (!comAv.find(c => c.id === selCiclo)) selCiclo = comAv[0].id;
+  const c = cicloAtual();
+  if (!c.avaliados.find(a => a.id === selAv)) selAv = c.avaliados[0].id;
+  const av = c.avaliados.find(a => a.id === selAv);
+  const avals = avaliacoes().filter(r => r.ciclo === c.id && r.avaliado === av.id);
+  let h = '<div class="card noprint"><div class="row">' +
+    '<div><label>Ciclo</label><select onchange="selCiclo=this.value;selAv=\'\';renderRel()">' + comAv.map(x => '<option value="' + x.id + '" ' + (x.id === selCiclo ? 'selected' : '') + '>' + esc(x.empresa + ' · ' + x.nome + ' (' + x.modo + '°)') + '</option>').join('') + '</select></div>' +
+    '<div><label>Pessoa avaliada</label><select onchange="selAv=this.value;renderRel()">' + c.avaliados.map(a => '<option value="' + a.id + '" ' + (a.id === selAv ? 'selected' : '') + '>' + esc(a.nome) + '</option>').join('') + '</select></div>' +
+    '<div class="btns"><button class="btn btn-primary" onclick="window.print()">Imprimir / salvar PDF</button></div></div></div>';
+  if (!avals.length) { $('view').innerHTML = h + '<div class="card vazio">Ainda não há respostas para ' + esc(av.nome) + '.</div>'; return; }
+  h += relatorioHtml(c, av, Core360.analisar(cfg, c.modo, avals));
+  $('view').innerHTML = h;
+}
+
+function cel(v) { const L = cfg.leitura; return v == null ? 'c-na' : (v >= L.forte ? 'c-ok' : (v < L.desenvolver ? 'c-low' : 'c-mid')); }
+
+function radarSvg(A) {
+  const n = A.linhas.length, cx = 250, cy = 225, R = 148;
+  const ang = i => -Math.PI / 2 + 2 * Math.PI * i / n;
+  const pt = (i, v) => { const rr = R * ((v == null ? 1 : v) - 1) / 4; return [cx + rr * Math.cos(ang(i)), cy + rr * Math.sin(ang(i))]; };
+  let s = '<svg viewBox="0 0 500 450" class="radar" role="img" aria-label="Radar das 8 dimensões">';
+  for (let l = 1; l <= 5; l++) {
+    s += '<polygon points="' + A.linhas.map((_, i) => pt(i, l).join(',')).join(' ') + '" fill="none" stroke="rgba(57,22,148,.16)"/>';
+    if (l > 1) s += '<text x="' + (cx + 4) + '" y="' + (cy - R * (l - 1) / 4 - 2) + '" font-size="9" fill="#8B849A">' + l + '</text>';
+  }
+  A.linhas.forEach((d, i) => {
+    const [x, y] = pt(i, 5), c = Math.cos(ang(i)), sn = Math.sin(ang(i));
+    s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x + '" y2="' + y + '" stroke="rgba(57,22,148,.16)"/>';
+    const lx = cx + (R + 14) * c, ly = cy + (R + 14) * sn + (sn < -0.5 ? -2 : (sn > 0.5 ? 10 : 4));
+    s += '<text x="' + lx + '" y="' + ly + '" font-size="12" font-weight="600" fill="#24153E" text-anchor="' + (c > 0.3 ? 'start' : (c < -0.3 ? 'end' : 'middle')) + '">' + esc(d.nome) + '</text>';
+  });
+  const series = [];
+  if (A.grupos.find(g => g.id === 'self')) series.push({ rot: 'Autoavaliação', cor: '#FF0060', dash: '6 4', f: l => l.self });
+  if (A.ref && A.ref.id === 'avaliadores') series.push({ rot: 'Visão dos avaliadores', cor: '#391694', f: l => l.ref });
+  if (A.grupos.find(g => g.id === 'gestor')) series.push({ rot: 'Gestor(a)', cor: '#00A79E', f: l => (l.grupos.find(g => g.id === 'gestor') || {}).media });
+  series.forEach(se => {
+    const pts = A.linhas.map((l, i) => pt(i, se.f(l)));
+    s += '<polygon points="' + pts.map(p => p.join(',')).join(' ') + '" fill="' + se.cor + '" fill-opacity="' + (se.dash ? 0.04 : 0.12) + '" stroke="' + se.cor + '" stroke-width="2.4"' + (se.dash ? ' stroke-dasharray="' + se.dash + '"' : '') + '/>';
+    pts.forEach(p => { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="' + se.cor + '"/>'; });
+  });
+  s += '</svg><div class="leg">' + series.map(se => '<span><i style="background:' + se.cor + '"></i>' + se.rot + '</span>').join('') + '</div>';
+  return s;
+}
+
+function relatorioHtml(c, av, A) {
+  const modoRot = cfg.modos[c.modo].rotulo;
+  const gs = Core360.gruposDoModo(cfg, c.modo);
+  const sec = (t, b) => '<div class="rel-sec"><h3>' + t + '</h3>' + b + '</div>';
+  const refRot = A.ref ? A.ref.rotulo : '—';
+  let h = '<div class="rel"><div class="rel-head"><img src="logo.png" alt="Instituto da Liderança"><div class="st">' + esc(modoRot) + ' · Radar da Liderança</div><div class="rel-name">' + esc(av.nome) + '</div>' +
+    '<div class="muted" style="font-size:13px">' + esc(av.cargo || '') + (av.cargo ? ' · ' : '') + esc(c.empresa) + ' · ' + esc(c.nome) + '</div></div>';
+
+  // Participação
+  h += sec('Participação', '<table><tr><th>Quem respondeu</th><th class="v">Respostas</th><th>Situação no relatório</th></tr>' + gs.map(g => {
+    const n = A.contagem[g.id] || 0;
+    let sit;
+    if (!n) sit = '<span class="muted">Sem respostas</span>';
+    else if (!g.anonimo) sit = 'Exibido';
+    else if (A.grupos.find(x => x.id === g.id)) sit = 'Exibido (anônimo)';
+    else if (A.grupos.find(x => x.id === 'consolidado' && x.composicao.includes(g.rotulo))) sit = 'Somado em “Demais avaliadores” (grupo abaixo do mínimo de ' + g.minimo + ')';
+    else sit = '<b style="color:#D6334A">Oculto: abaixo do mínimo de ' + g.minimo + ' para preservar o anonimato</b>';
+    return '<tr><td>' + esc(g.rotulo) + '</td><td class="v">' + n + '</td><td>' + sit + '</td></tr>';
+  }).join('') + '</table>');
+
+  // Resumo
+  const R = A.resumoLeitura;
+  h += sec('Resumo', '<div class="kpis"><div class="kpi"><b>' + fmt(A.geral.self) + '</b><span>Autoavaliação (média geral, 1 a 5)</span></div>' +
+    '<div class="kpi"><b>' + fmt(A.geral.ref) + '</b><span>' + esc(refRot) + (A.ref ? ' · ' + A.ref.n + ' resp.' : '') + '</span></div>' +
+    '<div class="kpi"><b>' + fmtGap(A.geral.gap) + '</b><span>Diferença (auto − outros)</span></div>' +
+    '<div class="kpi"><b>' + R.cegos + '</b><span>Pontos cegos</span></div><div class="kpi"><b>' + R.escondidos + '</b><span>Forças escondidas</span></div><div class="kpi"><b>' + R.forcas + '</b><span>Forças reconhecidas</span></div></div>' +
+    '<ul class="l">' + destaques(A).map(x => '<li>' + x + '</li>').join('') + '</ul>');
+
+  h += sec('Radar das 8 dimensões', radarSvg(A));
+
+  // Tabela por dimensão
+  const colGr = A.grupos.filter(g => g.id !== 'self');
+  const mostraRef = A.ref && A.ref.id === 'avaliadores';
+  h += sec('Resultado por dimensão', '<div style="overflow-x:auto"><table><tr><th>Dimensão</th><th class="v">Auto</th>' + colGr.map(g => '<th class="v">' + esc(g.rotulo.replace(/ \(.*\)/, '')) + '</th>').join('') + (mostraRef ? '<th class="v">Avaliadores</th>' : '') + '<th class="v">Dif.</th><th>Leitura</th></tr>' +
+    A.linhas.map(l => '<tr><td><b>' + esc(l.nome) + '</b><div class="muted" style="font-size:11px">' + esc(l.descricao) + '</div></td><td class="v ' + cel(l.self) + '">' + fmt(l.self) + '</td>' +
+      colGr.map(g => { const m = (l.grupos.find(x => x.id === g.id) || {}).media; return '<td class="v ' + cel(m) + '">' + fmt(m) + '</td>'; }).join('') +
+      (mostraRef ? '<td class="v ' + cel(l.ref) + '">' + fmt(l.ref) + '</td>' : '') +
+      '<td class="v" style="color:' + (l.gap == null ? '#aaa' : (l.gap >= cfg.leitura.limiarGap ? '#D6334A' : (l.gap <= -cfg.leitura.limiarGap ? '#00A79E' : '#6F667E'))) + '">' + fmtGap(l.gap) + '</td>' +
+      '<td><span class="tag" style="background:' + l.leitura.cor + '">' + l.leitura.rotulo + '</span>' + (l.divergente ? ' <span class="pill" title="Os avaliadores discordam entre si nesta dimensão">avaliadores divergem</span>' : '') + '</td></tr>').join('') + '</table></div>' +
+    '<p class="desc" style="margin-top:8px">Escala de 1 a 5. Ponto cego: autoavaliação ' + fmt(cfg.leitura.limiarGap) + ' ponto ou mais acima dos outros. Força escondida: os outros veem ' + fmt(cfg.leitura.limiarGap) + ' ponto ou mais acima da autoavaliação. “Dif.” = autoavaliação − ' + esc(refRot.toLowerCase()) + '.</p>');
+
+  // Itens
+  const li = (arr, f) => arr.length ? '<ul class="l">' + arr.map(f).join('') + '</ul>' : '<p class="desc">Nenhum item nesta categoria.</p>';
+  h += sec('Comportamentos em destaque', '<div class="cols2"><div><div class="st">Pontos cegos</div>' + li(A.cegos, i => '<li><b>' + esc(i.texto) + '</b><br><span class="muted">' + esc(i.dim) + ' · auto ' + fmt(i.self) + ' × outros ' + fmt(i.ref) + '</span></li>') + '</div>' +
+    '<div><div class="st">Forças escondidas</div>' + li(A.escondidos, i => '<li><b>' + esc(i.texto) + '</b><br><span class="muted">' + esc(i.dim) + ' · auto ' + fmt(i.self) + ' × outros ' + fmt(i.ref) + '</span></li>') + '</div>' +
+    '<div><div class="st">Maiores forças (olhar dos outros)</div>' + li(A.forcas, i => '<li><b>' + esc(i.texto) + '</b><br><span class="muted">' + esc(i.dim) + ' · ' + fmt(i.ref) + '</span></li>') + '</div>' +
+    '<div><div class="st">Maiores oportunidades (olhar dos outros)</div>' + li(A.oportunidades, i => '<li><b>' + esc(i.texto) + '</b><br><span class="muted">' + esc(i.dim) + ' · ' + fmt(i.ref) + '</span></li>') + '</div></div>');
+
+  // Comentários
+  const temAb = A.abertas.some(a => a.itens.length);
+  h += sec('Comentários abertos', temAb ? A.abertas.map(a => '<div class="st" style="margin-top:8px">' + esc(a.rotulo) + '</div>' + (a.itens.length ? a.itens.map(x => '<div class="cmt"><small>' + esc(x.de) + '</small>' + esc(x.texto) + '</div>').join('') : '<p class="desc">Sem comentários.</p>')).join('') : '<p class="desc">Nenhum comentário registrado.</p>');
+
+  // Devolutiva e PDI
+  h += sec('Roteiro da conversa de devolutiva', '<ul class="l"><li>1. O que mais te surpreendeu neste relatório? E o que confirmou o que você já sabia?</li><li>2. Qual ponto cego você reconhece? Em que situação recente isso apareceu?</li><li>3. Qual força escondida vale a pena usar mais, e onde?</li><li>4. Escolha no máximo 2 dimensões para trabalhar. O que você vai fazer diferente na próxima semana?</li></ul>' +
+    '<table class="pdi" style="margin-top:12px"><tr><th>Dimensão</th><th>Comportamento a praticar</th><th>Como vou medir</th><th>Prazo</th><th>Apoio</th></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table>');
+
+  h += '<div class="nota">Este relatório é uma leitura para <b>desenvolvimento</b>, baseada em percepções de pessoas diferentes sobre comportamentos observáveis. Não é nota de desempenho e não deve ser usado isoladamente em decisões de promoção ou desligamento. Resultados de grupos anônimos só aparecem com no mínimo ' + Core360.minimoAnon(cfg) + ' avaliadores.</div></div>';
+  return h;
+}
+
+function destaques(A) {
+  const out = [], L = A.linhas;
+  const mx = (arr, f) => arr.reduce((b, x) => (b == null || f(x) > f(b)) ? x : b, null);
+  const comGap = L.filter(l => l.gap != null);
+  const cego = mx(comGap.filter(l => l.leitura.tipo === 'cego'), l => l.gap);
+  const esc2 = mx(comGap.filter(l => l.leitura.tipo === 'escondido'), l => -l.gap);
+  const comRef = L.filter(l => l.ref != null);
+  const forte = mx(comRef, l => l.ref), fraca = mx(comRef, l => -l.ref);
+  if (cego) out.push('<b>Maior ponto cego:</b> ' + esc(cego.nome) + ' (autoavaliação ' + fmt(cego.self) + ' × ' + esc(A.ref.rotulo.toLowerCase()) + ' ' + fmt(cego.ref) + ').');
+  if (esc2) out.push('<b>Maior força escondida:</b> ' + esc(esc2.nome) + ' (autoavaliação ' + fmt(esc2.self) + ' × ' + esc(A.ref.rotulo.toLowerCase()) + ' ' + fmt(esc2.ref) + ').');
+  if (forte) out.push('<b>Dimensão mais forte para os outros:</b> ' + esc(forte.nome) + ' (' + fmt(forte.ref) + ').');
+  if (fraca && fraca !== forte) out.push('<b>Dimensão com maior espaço de desenvolvimento:</b> ' + esc(fraca.nome) + ' (' + fmt(fraca.ref) + ').');
+  if (A.resumoLeitura.divergentes) out.push(A.resumoLeitura.divergentes + ' dimensão(ões) em que os avaliadores discordam entre si: vale perguntar em que situações cada grupo vê o comportamento.');
+  if (!A.ref) out.push('Ainda não há olhar de outros avaliadores exibível: o relatório mostra só a autoavaliação.');
+  return out;
+}
+
+/* ───────── Dados e testes ───────── */
+function renderDados() {
+  if (API()) {
+    $('view').innerHTML = '<div class="card"><div class="st">Situação no servidor</div><div class="kpis"><div class="kpi"><b>' + ciclos.length + '</b><span>ciclos</span></div><div class="kpi"><b>' + cacheAval.length + '</b><span>avaliações recebidas</span></div></div>' +
+      '<div class="btns" style="margin-top:12px"><button class="btn btn-ghost" onclick="atualizar()">Atualizar dados</button><button class="btn btn-ghost" onclick="baixar(\'idl-360-respostas.json\',JSON.stringify(cacheAval,null,2))">Exportar respostas (JSON)</button></div>' +
+      '<p class="desc" style="margin-top:10px">Os dados ficam na planilha do Apps Script. Restrinja o compartilhamento dessa planilha: quem a abre vê as respostas brutas.</p></div>';
+    return;
+  }
+  const a = Core360.store.listar();
+  $('view').innerHTML = '<div class="card"><div class="st">Situação deste navegador</div><div class="kpis"><div class="kpi"><b>' + ciclos.length + '</b><span>ciclos</span></div><div class="kpi"><b>' + a.length + '</b><span>avaliações gravadas</span></div></div>' +
+    '<p class="desc" style="margin-top:8px">No modo teste, tudo fica gravado no navegador onde foi feito. A coleta real com vários respondentes depende do backend com tokens.</p></div>' +
+    '<div class="card"><div class="st">Dados de demonstração</div><p class="desc">Cria um ciclo de exemplo com uma pessoa avaliada e respostas fictícias, para ver o relatório pronto.</p><div class="btns">' +
+    '<button class="btn btn-primary" onclick="gerarDemo(\'360\')">Exemplo 360°</button><button class="btn btn-primary" onclick="gerarDemo(\'180\')">Exemplo 180°</button>' +
+    '<button class="btn btn-ghost" onclick="gerarDemo(\'360\',{pares:2,liderados:2,outros:0})">360° com grupos pequenos (testar anonimato)</button></div></div>' +
+    '<div class="card"><div class="st">Backup</div><div class="btns"><button class="btn btn-ghost" onclick="exportar()">Exportar JSON</button><label class="btn btn-ghost" style="margin:0;cursor:pointer">Importar JSON<input type="file" accept=".json" style="display:none" onchange="importar(this)"></label><button class="btn btn-ghost" onclick="limpar()">Apagar tudo</button></div></div>';
+}
+function gerarDemo(modo, qtd) {
+  const c = { id: 'demo-' + modo + '-' + uid(), empresa: 'Empresa Demo', nome: 'Exemplo ' + modo + '°' + (qtd ? ' (grupos pequenos)' : ''), modo, avaliados: [] };
+  const av = { id: 'maria-demo-' + uid(), nome: 'Maria Souza (exemplo)', cargo: 'Gerente de Operações' };
+  c.avaliados.push(av); ciclos.unshift(c); salvarCiclos();
+  const l = Core360.store.listar().concat(Core360.demo(cfg, modo, c.id, av.id, av.nome, c.empresa, qtd));
+  Core360.store.salvar(l);
+  selCiclo = c.id; selAv = av.id; go('rel'); toast('Exemplo criado.');
+}
+function baixar(nome, txt) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' })); a.download = nome; a.click(); }
+function exportar() { baixar('idl-360-backup.json', JSON.stringify({ ciclos, avaliacoes: Core360.store.listar() }, null, 2)); }
+function importar(inp) {
+  const f = inp.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { const j = JSON.parse(r.result); ciclos = j.ciclos || []; salvarCiclos(); Core360.store.salvar(j.avaliacoes || []); selCiclo = ciclos[0] ? ciclos[0].id : ''; go('dados'); toast('Importado.'); } catch (e) { toast('Arquivo inválido.'); } };
+  r.readAsText(f);
+}
+function limpar() { if (!confirm('Apagar todos os ciclos e avaliações deste navegador?')) return; ciclos = []; selCiclo = ''; selAv = ''; salvarCiclos(); Core360.store.salvar([]); go('dados'); }
+
+boot();
+</script>
+</body>
+</html>

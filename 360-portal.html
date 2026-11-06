@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal da Empresa — Avaliação 360° — Instituto da Liderança</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --idl-magenta:#FF0060; --idl-purple:#391694; --idl-purple-dark:#261062; --idl-violet:#4D1DBF; --idl-turquoise:#00D0C9;
+  --idl-text:#24153E; --idl-text-muted:#6F667E; --idl-background:#FBF9FF; --idl-background-soft:#F4F0FB; --idl-white:#FFFFFF;
+  --idl-border:rgba(57,22,148,.13);
+  --idl-gradient-light:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(255,0,96,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 85% 75%,rgba(77,29,191,.04) 0%,transparent 55%),#FBF9FF;
+  --r:12px; --r-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--idl-background);color:var(--idl-text);min-height:100vh}
+.bg{position:fixed;inset:0;z-index:0;background:var(--idl-gradient-light)}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:28px 16px 80px}
+.logo-row{display:flex;justify-content:center;margin-bottom:8px}.logo-row img{height:72px}
+h1{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--idl-purple-dark);text-align:center;margin-bottom:4px}
+.subtitle{font-size:12px;color:var(--idl-text-muted);text-align:center;margin-bottom:22px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+.card{background:#fff;border:1px solid var(--idl-border);border-radius:var(--r);padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 18px rgba(57,22,148,.05)}
+.st{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--idl-magenta);font-family:'JetBrains Mono',monospace;margin-bottom:10px;font-weight:700}
+.desc{font-size:13px;color:var(--idl-text-muted);line-height:1.6;margin-bottom:12px}
+label{display:block;font-size:12px;color:var(--idl-text-muted);margin-bottom:5px;font-weight:600}
+input{width:100%;background:#fff;border:1px solid var(--idl-border);border-radius:var(--r-sm);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;color:var(--idl-text)}
+input:focus{border-color:var(--idl-magenta)}
+.field{margin-bottom:12px}
+.btn{padding:11px 22px;border-radius:100px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700}
+.btn-primary{background:linear-gradient(135deg,#261062,#FF0060);color:#FBF9FF}
+.btn-ghost{background:transparent;border:1px solid var(--idl-border);color:var(--idl-text-muted)}
+.btn-sm{padding:6px 12px;font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--idl-text-muted);padding:8px;border-bottom:2px solid var(--idl-border)}
+td{padding:9px 8px;border-bottom:1px solid var(--idl-border);vertical-align:middle}
+.v{text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700}
+.bar{height:8px;background:var(--idl-background-soft);border-radius:99px;overflow:hidden;min-width:80px}.bar>div{height:100%;background:linear-gradient(90deg,#391694,#FF0060)}
+.tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+.ok{background:rgba(28,163,85,.14);color:#12703a}.pend{background:rgba(214,154,30,.16);color:#8a5d00}
+.muted{color:var(--idl-text-muted)}
+.msg{color:var(--idl-magenta);font-size:13px;min-height:18px;margin-bottom:8px}
+.toast{position:fixed;bottom:24px;right:24px;background:#391694;color:#FBF9FF;border-radius:10px;padding:12px 18px;font-size:13px;display:none;z-index:99}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="logo-row"><img src="logo.png" alt="Instituto da Liderança"></div>
+  <h1>Portal da Empresa</h1>
+  <div class="subtitle">AVALIAÇÃO 360° · ACOMPANHAMENTO DA PARTICIPAÇÃO</div>
+  <div id="app"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="360-api.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m) { const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
+let cfg = null;
+const cred = () => { try { return JSON.parse(sessionStorage.getItem('idl360_portal') || 'null'); } catch (e) { return null; } };
+
+async function init() {
+  try { cfg = await (await fetch('360-config.json?t=' + Date.now())).json(); } catch (e) {}
+  if (!Api360.ativo()) { $('app').innerHTML = '<div class="card"><div class="st">Indisponível</div><p class="desc">O portal ainda não está habilitado. Fale com o Instituto da Liderança.</p></div>'; return; }
+  const c = cred(); if (c) return carregar(c.empresa, c.senha); gate();
+}
+function gate(msg) {
+  $('app').innerHTML = '<div class="card" style="max-width:420px;margin:0 auto"><div class="st">Entrar</div><p class="desc">Acompanhe quem já respondeu à avaliação. Por segurança, este portal não mostra notas nem comentários: os relatórios são entregues pelo Instituto.</p>' +
+    '<div class="field"><label>Empresa</label><input id="p-emp" autocomplete="off"></div><div class="field"><label>Senha</label><input id="p-sen" type="password" onkeydown="if(event.key===\'Enter\')entrar()"></div>' +
+    '<div class="msg">' + esc(msg || '') + '</div><button class="btn btn-primary" onclick="entrar()">Entrar</button></div>';
+}
+function entrar() { const e = $('p-emp').value.trim(), s = $('p-sen').value; if (e && s) carregar(e, s); }
+function sair() { try { sessionStorage.removeItem('idl360_portal'); } catch (e) {} gate(); }
+
+async function carregar(empresa, senha) {
+  let r;
+  try { r = await Api360.get({ action: 'portalEmpresa', empresa, senha }); } catch (e) { return gate('Não foi possível conectar. Tente novamente.'); }
+  if (!r.valido) { try { sessionStorage.removeItem('idl360_portal'); } catch (e) {} return gate(r.mensagem || 'Empresa ou senha incorretos.'); }
+  try { sessionStorage.setItem('idl360_portal', JSON.stringify({ empresa, senha })); } catch (e) {}
+  render(r);
+}
+const link = c => new URL('360.html', location.href).href + '?t=' + c;
+function copiar(t) { (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Link copiado.'), () => prompt('Copie o link:', t)); }
+const ordem = ['self', 'gestor', 'pares', 'liderados', 'outros'];
+
+function render(r) {
+  let h = '<div class="card"><div class="st">' + esc(r.empresa) + '</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ghost btn-sm" onclick="cred()&&carregar(cred().empresa,cred().senha)">Atualizar</button><button class="btn btn-ghost btn-sm" onclick="sair()">Sair</button></div></div>';
+  if (!r.avaliados.length) h += '<div class="card"><p class="desc">Nenhuma avaliação cadastrada para a sua empresa ainda.</p></div>';
+  r.avaliados.forEach(a => {
+    h += '<div class="card"><div class="st">' + esc(a.ciclo) + ' · ' + esc(a.modo) + '°</div><div style="margin-bottom:8px"><b>' + esc(a.avaliado_nome) + '</b> <span class="muted">' + esc(a.cargo || '') + '</span></div>' +
+      '<table><tr><th>Quem responde</th><th>Progresso</th><th class="v">Respostas</th><th>Situação</th><th>Link</th></tr>' +
+      [...a.grupos].sort((x, y) => ordem.indexOf(x.grupo) - ordem.indexOf(y.grupo)).map(g => {
+        const rot = cfg && cfg.grupos[g.grupo] ? cfg.grupos[g.grupo].rotulo : g.grupo, pct = Math.min(100, Math.round(g.usos / g.limite * 100)), fim = g.usos >= g.limite;
+        return '<tr><td>' + esc(rot) + '</td><td><div class="bar"><div style="width:' + pct + '%"></div></div></td><td class="v">' + g.usos + '/' + g.limite + '</td>' +
+          '<td><span class="tag ' + (fim ? 'ok' : 'pend') + '">' + (fim ? 'Concluído' : 'Pendente') + '</span></td>' +
+          '<td>' + (fim ? '' : '<button class="btn btn-ghost btn-sm" onclick="copiar(\'' + esc(link(g.codigo)) + '\')">Copiar link</button>') + '</td></tr>';
+      }).join('') + '</table></div>';
+  });
+  $('app').innerHTML = h;
+}
+init();
+</script>
+</body>
+</html>
